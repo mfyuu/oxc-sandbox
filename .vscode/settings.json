@@ -1,4 +1,16 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "oxc.fmt.experimental": true,
+  "oxc.typeAware": true, // Enable type aware linting.
+  "oxc.lint.run": "onSave", // Run the linter on save (onSave) or on type (onType)
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit", // I'm not sure if this specification is valid.
+    "source.organizeImports": "explicit"
+  },
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
