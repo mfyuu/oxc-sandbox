@@ -1,0 +1,11 @@
+pre-commit:
+  commands:
+    fmt:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: bunx oxfmt {staged_files}
+      stage_fixed: true
+pre-push:
+  commands:
+    lint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: bunx oxlint {push_files}
