@@ -2,8 +2,15 @@ import { useEffect, useState } from 'react'
 
 import { createFileRoute } from '@tanstack/react-router'
 
-function getNames() {
-  return fetch('/demo/api/names').then((res) => res.json() as Promise<string[]>)
+async function getNames(): Promise<string[]> {
+  const res = await fetch('/demo/api/names')
+  const data = await res.json()
+
+  if (!Array.isArray(data)) {
+    throw new Error('Invalid response format')
+  }
+
+  return data.map((item) => String(item))
 }
 
 export const Route = createFileRoute('/demo/start/api-request')({
@@ -14,7 +21,24 @@ function Home() {
   const [names, setNames] = useState<Array<string>>([])
 
   useEffect(() => {
-    getNames().then(setNames)
+    let cancelled = false
+
+    const load = async () => {
+      try {
+        const fetchedNames = await getNames()
+        if (!cancelled) {
+          setNames(fetchedNames)
+        }
+      } catch (error) {
+        console.error('Failed to fetch names', error)
+      }
+    }
+
+    void load()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   return (

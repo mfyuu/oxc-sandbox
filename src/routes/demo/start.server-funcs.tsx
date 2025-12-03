@@ -4,11 +4,11 @@ import { createServerFn } from '@tanstack/react-start'
 
 const getCurrentServerTime = createServerFn({
   method: 'GET',
-}).handler(async () => await new Date().toISOString())
+}).handler(async () => new Date().toISOString())
 
 export const Route = createFileRoute('/demo/start/server-funcs')({
   component: Home,
-  loader: async () => await getCurrentServerTime(),
+  loader: () => getCurrentServerTime(),
 })
 
 function Home() {
